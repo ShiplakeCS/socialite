@@ -1,0 +1,5 @@
+# Twitter authentication keys - keep secret!
+ACCESS_TOKEN = '4227530309-shKHCCLlDDuqFwhLqSTt4dDojH0THfARZ68X1Eu'
+ACCESS_SECRET = 'A0dUHykLXpPSWeaOcYoYjQeaCdFCzgfmNlv9pg2kbsTcQ'
+CONSUMER_KEY = 'gTJZFUWHMxdR5NARO7ZdJ1S40'
+CONSUMER_SECRET = 'cy5FeX7GqcrBhnY0fE6bVHDVEUjrAqeqyPlnVlH7wtVyOs7i2C'

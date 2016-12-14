@@ -1,9 +1,9 @@
 """
 Christmas Jumper
-2015 A W Dimmick
+2016 A W Dimmick
 """
-
 from twitter import Twitter, OAuth, TwitterHTTPError, TwitterStream
+import keys
 #import json
 from time import sleep
 #import datetime
@@ -18,185 +18,185 @@ class LightsController:
 
     def __init__(self):
 
-        self.lightsBusy = False
+		self.lightsBusy = False
 
-        GPIO.setmode(GPIO.BCM)
-        
-        GPIO.setup(18, GPIO.OUT)
-        
-        GPIO.setup(self.STAR_LIGHTS, GPIO.OUT)
-        GPIO.setup(self.TREE_LIGHTS, GPIO.OUT)
-        GPIO.setup(self.BALL_LIGHTS, GPIO.OUT)
-        #GPIO.setup(self.STATUS_LIGHT, GPIO.OUT)
-        print("Initialised GPIO pins")
-        self.off()
+		GPIO.setmode(GPIO.BCM)
 
-    def off(self):
+		GPIO.setup(18, GPIO.OUT)
 
-        print("**All lights off**")
+		GPIO.setup(self.STAR_LIGHTS, GPIO.OUT)
+		GPIO.setup(self.TREE_LIGHTS, GPIO.OUT)
+		GPIO.setup(self.BALL_LIGHTS, GPIO.OUT)
+		#GPIO.setup(self.STATUS_LIGHT, GPIO.OUT)
+		print("Initialised GPIO pins")
+		self.off()
 
-        GPIO.output(self.STAR_LIGHTS, False)
-        GPIO.output(self.TREE_LIGHTS, False)
-        GPIO.output(self.BALL_LIGHTS, False)
-        #GPIO.output(self.STATUS_LIGHT, False)
+	def off(self):
 
-    def treeOn(self):
+		print("**All lights off**")
 
-        GPIO.output(self.TREE_LIGHTS, True)
+		GPIO.output(self.STAR_LIGHTS, False)
+		GPIO.output(self.TREE_LIGHTS, False)
+		GPIO.output(self.BALL_LIGHTS, False)
+		#GPIO.output(self.STATUS_LIGHT, False)
 
-    def treeOff(self):
+	def treeOn(self):
 
-        GPIO.output(self.TREE_LIGHTS, False)
+		GPIO.output(self.TREE_LIGHTS, True)
 
-    def starOn(self):
+	def treeOff(self):
 
-        GPIO.output(self.STAR_LIGHTS, True)
+		GPIO.output(self.TREE_LIGHTS, False)
 
-    def starOff(self):
+	def starOn(self):
 
-        GPIO.output(self.STAR_LIGHTS, False)
+		GPIO.output(self.STAR_LIGHTS, True)
 
-    def ballsOn(self):
+	def starOff(self):
 
-        GPIO.output(self.BALL_LIGHTS, True)
+		GPIO.output(self.STAR_LIGHTS, False)
 
-    def ballsOff(self):
+	def ballsOn(self):
 
-        GPIO.output(self.BALL_LIGHTS, False)
+		GPIO.output(self.BALL_LIGHTS, True)
 
-    def statusOn(self):
+	def ballsOff(self):
 
-        print("**Status light on**")
+		GPIO.output(self.BALL_LIGHTS, False)
 
-        #GPIO.output(self.STATUS_LIGHT, True)
+	def statusOn(self):
 
-    def statusOff(self):
+		print("**Status light on**")
 
-        print("**Status light off**")
+		#GPIO.output(self.STATUS_LIGHT, True)
 
-        #GPIO.output(self.STATUS_LIGHT, False)
+	def statusOff(self):
 
-    def on(self, duration):
+		print("**Status light off**")
 
-        flashTime = 0.2
-        numberFlashes = duration / flashTime
+		#GPIO.output(self.STATUS_LIGHT, False)
 
-        self.lightsBusy = True
+	def on(self, duration):
 
-        print("**All lights on**")
-        for n in range(0,int(numberFlashes)):
-            #print("flash number: " + str(n))
-            self.treeOn()
-            self.starOn()
-            self.ballsOn()
-            sleep(flashTime)
+		flashTime = 0.2
+		numberFlashes = duration / flashTime
 
-        self.off()
+		self.lightsBusy = True
 
-    def flashTree(self,duration):
+		print("**All lights on**")
+		for n in range(0,int(numberFlashes)):
+			#print("flash number: " + str(n))
+			self.treeOn()
+			self.starOn()
+			self.ballsOn()
+			sleep(flashTime)
 
-        flashTime = 0.2
-        numberFlashes = duration / flashTime / 2.0
+		self.off()
 
-        self.lightsBusy = True
+	def flashTree(self,duration):
 
-        for n in range(0,int(numberFlashes)):
-            #print("flash number: " + str(n))
-            self.treeOn()
-            sleep(flashTime)
-            self.treeOff()
-            sleep(flashTime)
+		flashTime = 0.2
+		numberFlashes = duration / flashTime / 2.0
 
-        self.lightsBusy = False
+		self.lightsBusy = True
 
-    def flashBalls(self,duration):
+		for n in range(0,int(numberFlashes)):
+			#print("flash number: " + str(n))
+			self.treeOn()
+			sleep(flashTime)
+			self.treeOff()
+			sleep(flashTime)
 
-        flashTime = 0.2
-        numberFlashes = duration / flashTime / 2.0
+		self.lightsBusy = False
 
-        self.lightsBusy = True
+	def flashBalls(self,duration):
 
-        for n in range(0,int(numberFlashes)):
-            self.ballsOn()
-            sleep(flashTime)
-            self.ballsOff()
-            sleep(flashTime)
+		flashTime = 0.2
+		numberFlashes = duration / flashTime / 2.0
 
-        self.lightsBusy = False
+		self.lightsBusy = True
 
-    def flashStar(self,duration):
+		for n in range(0,int(numberFlashes)):
+			self.ballsOn()
+			sleep(flashTime)
+			self.ballsOff()
+			sleep(flashTime)
 
-        flashTime = 0.2
-        numberFlashes = duration / flashTime / 2.0
+		self.lightsBusy = False
 
-        self.lightsBusy = True
+	def flashStar(self,duration):
 
-        for n in range(0,int(numberFlashes)):
-            self.starOn()
-            sleep(flashTime)
-            self.starOff()
-            sleep(flashTime)
+		flashTime = 0.2
+		numberFlashes = duration / flashTime / 2.0
 
-        self.lightsBusy = False
+		self.lightsBusy = True
 
-    def flashStarAndBalls(self,duration):
+		for n in range(0,int(numberFlashes)):
+			self.starOn()
+			sleep(flashTime)
+			self.starOff()
+			sleep(flashTime)
 
-        flashTime = 0.2
-        numberFlashes = duration / flashTime / 2.0
+		self.lightsBusy = False
 
-        self.lightsBusy = True
+	def flashStarAndBalls(self,duration):
 
-        for n in range(0,int(numberFlashes)):
-            self.starOn()
-            self.ballsOn()
-            sleep(flashTime)
-            self.starOff()
-            self.ballsOff()
-            sleep(flashTime)
+		flashTime = 0.2
+		numberFlashes = duration / flashTime / 2.0
 
-        self.lightsBusy = False        
+		self.lightsBusy = True
 
-    def flashAllTogether(self,duration):
+		for n in range(0,int(numberFlashes)):
+			self.starOn()
+			self.ballsOn()
+			sleep(flashTime)
+			self.starOff()
+			self.ballsOff()
+			sleep(flashTime)
 
-        flashTime = 0.2
-        numberFlashes = duration / flashTime / 2.0
+		self.lightsBusy = False
 
-        self.lightsBusy = True
+	def flashAllTogether(self,duration):
 
-        for n in range(0,int(numberFlashes)):
-            self.ballsOn()
-            self.treeOn()
-            self.starOn()
-            sleep(flashTime)
-            self.ballsOff()
-            self.treeOff()
-            self.starOff()
-            sleep(flashTime)
+		flashTime = 0.2
+		numberFlashes = duration / flashTime / 2.0
 
-        self.lightsBusy = False
+		self.lightsBusy = True
 
-    def flashAllSequence(self,duration):
+		for n in range(0,int(numberFlashes)):
+			self.ballsOn()
+			self.treeOn()
+			self.starOn()
+			sleep(flashTime)
+			self.ballsOff()
+			self.treeOff()
+			self.starOff()
+			sleep(flashTime)
 
-        flashTime = 0.2
-        numberFlashes = duration / flashTime / 3.0
+		self.lightsBusy = False
 
-        self.lightsBusy = True
-        #print (datetime.datetime.now())
+	def flashAllSequence(self,duration):
 
-        for n in range(0,int(numberFlashes)):
-            self.starOff()
-            self.treeOn()
-            sleep(flashTime)
-            self.treeOff()
-            self.ballsOn()
-            sleep(flashTime)
-            self.ballsOff()
-            self.starOn()
-            sleep(flashTime)
+		flashTime = 0.2
+		numberFlashes = duration / flashTime / 3.0
 
-        #print (datetime.datetime.now())
-        self.lightsBusy = False
-        
+		self.lightsBusy = True
+		#print (datetime.datetime.now())
+
+		for n in range(0,int(numberFlashes)):
+			self.starOff()
+			self.treeOn()
+			sleep(flashTime)
+			self.treeOff()
+			self.ballsOn()
+			sleep(flashTime)
+			self.ballsOff()
+			self.starOn()
+			sleep(flashTime)
+
+		#print (datetime.datetime.now())
+		self.lightsBusy = False
+
 
 def showReady():
 	
@@ -224,137 +224,124 @@ def showError():
 
 
 def getDummyTweets():
-    dummy = ['@shiplake_comp jumper on #testing','@shiplake_comp jumper flash #testing','@shiplake_comp jumper balls flash #testing','@shiplake_comp jumper balls on #testing']
-    return dummy
+	dummy = ['@shiplake_comp jumper on #testing','@shiplake_comp jumper flash #testing','@shiplake_comp jumper balls flash #testing','@shiplake_comp jumper balls on #testing']
+	return dummy
 
-# Twitter authentication constants
-ACCESS_TOKEN = 
-ACCESS_SECRET = 
-CONSUMER_KEY = 
-CONSUMER_SECRET = 
-
-oauth = OAuth(ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET)
-
-# Preference constants
-ACTIVITY_TIME = 20
-TRIGGER_TEXT = "@shiplake_comp jumper"
-
-lc = LightsController()
 
 def realTweets():
-	
-	global lc
-	
-	try:
+    global lc
 
-		stream = TwitterStream(auth=oauth)
-		tweets = stream.statuses.filter(track=TRIGGER_TEXT)
-		twitterInterface = Twitter(auth=oauth)
-		
-		showReady()
-		print("Ready! Listening for tweets...")
-		
-		for tweet in tweets:
+    try:
 
-			print("Trigger tweet received: " + tweet['text'] + " - " + tweet['user']['name'])
-			messageBack = "Hey @" + tweet['user']['screen_name'] + "! Thanks for your tweet. You made my "
-			if "jumper flash" in tweet['text'].lower():
-				messageBack = messageBack + "whole jumper flash! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.flashAllTogether(ACTIVITY_TIME)
-			elif "jumper chase" in tweet['text'].lower():
-				messageBack = messageBack + "lights flash up and down! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.flashAllSequence(ACTIVITY_TIME)
-			elif "balls flash" in tweet['text'].lower():
-				messageBack = messageBack + "bauble lights flash! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.flashBalls(ACTIVITY_TIME)
-			elif "star flash" in tweet['text'].lower():
-				messageBack = messageBack + "star lights flash! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.flashStar(ACTIVITY_TIME)
-			elif "tree flash" in tweet['text'].lower():
-				messageBack = messageBack + "tree flash! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.flashTree(ACTIVITY_TIME)
-			elif "lights flash" in tweet['text'].lower():
-				messageBack = messageBack + "tree flash! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.flashTree(ACTIVITY_TIME)
-			elif "jumper on" in tweet['text'].lower():
-				messageBack = messageBack + "whole jumper light up! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.on(ACTIVITY_TIME)
-			elif "balls on" in tweet['text'].lower():
-				messageBack = messageBack + "bauble lights light up! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.ballsOn()
-				sleep(ACTIVITY_TIME)
-				lc.ballsOff()
-			elif "lights on" in tweet['text'].lower():
-				messageBack = messageBack + "tree lights turn on! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.treeOn()
-				sleep(ACTIVITY_TIME)
-				lc.treeOff()
-			elif "tree on" in tweet['text'].lower():
-				messageBack = messageBack + "tree lights turn on! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.treeOn()
-				sleep(ACTIVITY_TIME)
-				lc.treeOff()
-			elif "star on" in tweet['text'].lower():
-				messageBack = messageBack + "star light up! #ChristmasJumper #Shiplake7 #Creative"
-				#twitterInterface.statuses.update(status=messageBack)
-				lc.starOn()
-				sleep(ACTIVITY_TIME)
-				lc.starOff()        
-	
+        stream = TwitterStream(auth=oauth)
+        tweets = stream.statuses.filter(track=TRIGGER_TEXT)
+        #twitterInterface = Twitter(auth=oauth)
 
-	except:		
-		showError()
-		print("Error connecting to Twitter. Trying again in 10 seconds.")
-		sleep(10)
-		realTweets()
+        showReady()
+        print("Ready! Listening for tweets...")
+
+        for tweet in tweets:
+
+            print("Trigger tweet received: " + tweet['text'] + " - " + tweet['user']['name'])
+            messageBack = "Hey @" + tweet['user']['screen_name'] + "! Thanks for your tweet. You made my "
+            if "jumper flash" in tweet['text'].lower():
+                messageBack = messageBack + "whole jumper flash! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.flashAllTogether(ACTIVITY_TIME)
+            elif "jumper chase" in tweet['text'].lower():
+                messageBack = messageBack + "lights flash up and down! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.flashAllSequence(ACTIVITY_TIME)
+            elif "balls flash" in tweet['text'].lower():
+                messageBack = messageBack + "bauble lights flash! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.flashBalls(ACTIVITY_TIME)
+            elif "star flash" in tweet['text'].lower():
+                messageBack = messageBack + "star lights flash! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.flashStar(ACTIVITY_TIME)
+            elif "tree flash" in tweet['text'].lower():
+                messageBack = messageBack + "tree flash! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.flashTree(ACTIVITY_TIME)
+            elif "lights flash" in tweet['text'].lower():
+                messageBack = messageBack + "tree flash! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.flashTree(ACTIVITY_TIME)
+            elif "jumper on" in tweet['text'].lower():
+                messageBack = messageBack + "whole jumper light up! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.on(ACTIVITY_TIME)
+            elif "balls on" in tweet['text'].lower():
+                messageBack = messageBack + "bauble lights light up! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.ballsOn()
+                sleep(ACTIVITY_TIME)
+                lc.ballsOff()
+            elif "lights on" in tweet['text'].lower():
+                messageBack = messageBack + "tree lights turn on! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.treeOn()
+                sleep(ACTIVITY_TIME)
+                lc.treeOff()
+            elif "tree on" in tweet['text'].lower():
+                messageBack = messageBack + "tree lights turn on! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.treeOn()
+                sleep(ACTIVITY_TIME)
+                lc.treeOff()
+            elif "star on" in tweet['text'].lower():
+                messageBack = messageBack + "star light up! #ChristmasJumper #Shiplake7 #Creative"
+                # twitterInterface.statuses.update(status=messageBack)
+                lc.starOn()
+                sleep(ACTIVITY_TIME)
+                lc.starOff()
+
+
+    except:
+        showError()
+        print("Error connecting to Twitter. Trying again in 10 seconds.")
+        sleep(10)
+        realTweets()
 
 
 def testTweets():
     for tweet in getDummyTweets():
         if "jumper flash" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.flashAllTogether(ACTIVITY_TIME)
         elif "jumper chase" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.flashAllSequence(ACTIVITY_TIME)
         elif "balls flash" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.flashBalls(ACTIVITY_TIME)
         elif "star flash" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.flashStar(ACTIVITY_TIME)
         elif "tree flash" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.flashTree(ACTIVITY_TIME)
         elif "jumper on" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.on(ACTIVITY_TIME)
         elif "balls on" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.ballsOn()
             sleep(ACTIVITY_TIME)
             lc.ballsOff()
         elif "tree on" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.treeOn()
             sleep(ACTIVITY_TIME)
             lc.treeOff()
         elif "star on" in tweet.lower():
-            print ("Trigger tweet received: " + tweet)
+            print("Trigger tweet received: " + tweet)
             lc.starOn()
             sleep(ACTIVITY_TIME)
-            lc.starOff()            
+            lc.starOff()
         sleep(2)
+
 
 def simpleMode():
     print("Running in Simple Mode")
@@ -363,6 +350,21 @@ def simpleMode():
         lc.flashStar(10)
         lc.starOn()
         lc.flashBalls(10)
+
+# Authenticate against twitter api
+oauth = OAuth(keys.ACCESS_TOKEN, keys.ACCESS_SECRET, keys.CONSUMER_KEY, keys.CONSUMER_SECRET)
+
+# Preference constants
+ACTIVITY_TIME = 20
+TRIGGER_TEXT = "@shiplake_comp jumper"
+
+lc = LightsController()
+
+try:
+    f = open('trigger.txt','r')
+    TRIGGER_TEXT = f.readline().rstrip("\n")
+except:
+    print("Unable to load trigger text file")
 
 #testTweets()
 realTweets()
