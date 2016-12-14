@@ -368,4 +368,5 @@ except:
 
 #testTweets()
 realTweets()
-#simpleMode()
+# unnecesssary addition
+# simpleMode()
